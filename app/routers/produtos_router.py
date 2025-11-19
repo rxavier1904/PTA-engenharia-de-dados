@@ -9,7 +9,7 @@ router = APIRouter(prefix="/products", tags=["Produtos"])
 
 
 @router.post("/processar_produtos")
-def processar_produtis(dados: List[ProdutoRaw]):
+def processar_produtos(dados: List[ProdutoRaw]):
     # Converte JSON para DataFrame
     df = pd.DataFrame([d.dict() for d in dados])
 
