@@ -1,0 +1,13 @@
+from pydantic import BaseModel
+
+
+class ProdutoRaw(BaseModel):
+    product_id: str
+    product_category_name: str
+    product_name_lenght: float
+    product_description_lenght: float
+    product_photos_qty: float
+    product_weight_g: float
+    product_length_cm: float
+    product_height_cm: float
+    product_width_cm: float
