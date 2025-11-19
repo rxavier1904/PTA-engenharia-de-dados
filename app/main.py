@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
-from app.routers import example_router
+from app.routers import example_router, pedidos_router
 from app.routers.produtos_router import router as produtos_router
 
 app = FastAPI(
@@ -19,3 +19,4 @@ async def health_check():
 
 app.include_router(example_router, prefix="/example", tags=["Example"])
 app.include_router(produtos_router)
+app.include_router(pedidos_router, prefix="/pedidos", tags=["Pedidos"])
