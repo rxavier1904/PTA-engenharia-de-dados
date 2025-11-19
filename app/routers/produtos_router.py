@@ -2,8 +2,8 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 from typing import List
 import pandas as pd
-from schemas.produtos import *
-from services.produtos_services import *
+from ..schemas.produtos import *
+from ..services.produtos_services import *
 
 router = APIRouter(prefix="/products", tags=["Produtos"])
 
