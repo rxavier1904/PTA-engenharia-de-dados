@@ -28,19 +28,19 @@ def processar_itens(dados: List[ItemPedidoRaw]):
         valid_sellers=VALID_SELLERS
     )
 
-    df_validos, df_orfaos = verificar_integridade(df_limpo)
+    # df_validos, df_orfaos = verificar_integridade(df_limpo)
 
-    if not df_orfaos.empty:
-        # Se houver órfãos, falhar o fluxo com HTTP 400 (Bad Request)
-        # O n8n deve capturar este erro e disparar o alerta.
-        orfaos_json = df_orfaos.to_dict(orient="records")
+    # if not df_orfaos.empty:
+    #     # Se houver órfãos, falhar o fluxo com HTTP 400 (Bad Request)
+    #     # O n8n deve capturar este erro e disparar o alerta.
+    #     orfaos_json = df_orfaos.to_dict(orient="records")
         
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail={
-                "message": "Falha na Integridade Referencial. Dados órfãos detectados.",
-                "data": orfaos_json
-            }
-        )
+    #     raise HTTPException(
+    #         status_code=status.HTTP_400_BAD_REQUEST,
+    #         detail={
+    #             "message": "Falha na Integridade Referencial. Dados órfãos detectados.",
+    #             "data": orfaos_json
+    #         }
+    #     )
 
     return df_limpo.to_dict(orient="records")
