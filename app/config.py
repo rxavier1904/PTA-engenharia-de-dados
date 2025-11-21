@@ -18,7 +18,7 @@ def atualizar_ids_referencia(df: pd.DataFrame, tipo_tabela: str):
         print(f"IDs de Pedidos atualizados. Total: {len(VALID_ORDERS)}")
     
     elif tipo_tabela == 'vendedores':
-        novos_ids = set(df['sellers_id'])
+        novos_ids = set(df['seller_id'])
         VALID_SELLERS.update(novos_ids)
         print(f"IDs de Pedidos atualizados. Total: {len(VALID_SELLERS)}")
 
