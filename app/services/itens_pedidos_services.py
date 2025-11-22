@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 
+
+
 def filtrar_orfaos(df_itens: pd.DataFrame, valid_orders: set, valid_products: set, valid_sellers: set) -> pd.DataFrame:
     
     quantidade_inicial = len(df_itens)

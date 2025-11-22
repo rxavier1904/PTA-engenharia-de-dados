@@ -32,7 +32,8 @@ async def limpar_pedidos_endpoint(pedidos: List[PedidoInput]):
     # Aplica a função de limpeza
     df_limpo = limpar_pedidos(df)
 
-    atualizar_ids_referencia(df_limpo, 'pedidos')
+
+    #atualizar_ids_referencia(df_limpo, 'pedidos')
 
     
     # Converte para JSON tratando NaN como None
