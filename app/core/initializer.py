@@ -30,9 +30,9 @@ def inicializar_dimensoes():
 
     print("Dimensões carregadas com sucesso!\n")
 
-    write_sheet(DOCUMENTO, "produtos", df_produtos)
-    write_sheet(DOCUMENTO, "pedidos", df_pedidos)
-    write_sheet(DOCUMENTO, "vendedores", df_vendedores)
-    write_sheet(DOCUMENTO, "itens_pedidos", df_itens)
+    #write_sheet(DOCUMENTO, "produtos", df_produtos)
+    #write_sheet(DOCUMENTO, "pedidos", df_pedidos)
+    #write_sheet(DOCUMENTO, "vendedores", df_vendedores)
+    #write_sheet(DOCUMENTO, "itens_pedidos", df_itens)
 
-    print(" Tabelas escritas com sucesso!\n")
+    #print(" Tabelas escritas com sucesso!\n")

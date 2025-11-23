@@ -24,11 +24,11 @@ app = FastAPI(
 # Carrega dimensões automaticamente ao iniciar o servidor
 
 
-#@app.on_event("startup")
-#def startup_event():
-    #print("[STARTUP] Inicializando dimensões (pedidos, produtos, vendedores)...")
-    #inicializar_dimensoes()
-   #print("[STARTUP] Dimensões carregadas com sucesso!")
+@app.on_event("startup")
+def startup_event():
+    print("[STARTUP] Inicializando dimensões (pedidos, produtos, vendedores)...")
+    inicializar_dimensoes()
+    print("[STARTUP] Dimensões carregadas com sucesso!")
 
 
 @app.get("/", description="Mensagem de boas-vindas da API.")
