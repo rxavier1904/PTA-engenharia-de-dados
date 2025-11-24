@@ -38,6 +38,50 @@
 
 Este projeto foi desenvolvido para o Processo de Treinamento de Área (PTA) do CITi, com foco em engenharia de dados. Ele inclui uma API construída com FastAPI, utilizando boas práticas de desenvolvimento e uma estrutura modular para facilitar a manutenção e a escalabilidade. O objetivo principal do projeto é construir uma pipeline completa que consiga ser acessada via uma API.
 
+### Endpoints principais
+- `/pedidos/limpar` : Limpa e valida dados de pedidos
+- `/produtos/products/processar_produtos` : Limpa e valida dados de produtos
+- `/vendedores/limpar` : Limpa e valida dados de vendedores
+- `/itens_pedidos/limpar` : Limpa e valida dados de itens de pedidos
+- `/dimensoes/*` : Endpoints para dimensões auxiliares
+- `/admin_local/rodar_carga_inicial` : Recarrega as dimensões manualmente
+
+### Estrutura de pastas
+```
+app/
+  main.py                # Entrypoint FastAPI
+  core/
+    initializer.py       # Inicialização das dimensões
+    google_client.py     # Integração com Google Sheets
+  routers/               # Endpoints FastAPI
+    pedidos.py
+    produtos_router.py
+    vendedores.py
+    itens_pedidos.py
+    dimensoes_router.py
+    admin_router.py
+  schemas/               # Schemas Pydantic (validação)
+    pedido.py
+    produtos.py
+    vendedores.py
+    itens_pedidos.py
+  services/              # Lógica de limpeza/tratamento
+    limpeza_pedidos.py
+    produtos_services.py
+    vendedores_services.py
+    itens_pedidos_services.py
+  config.py              # Configurações globais
+  credentials/           # Credenciais Google
+    service_account.json
+```
+
+### Fluxos n8n
+A pasta `n8n/` contém os workflows exportados utilizados para orquestrar o pipeline de dados:
+- **produtos (2).json**: Monitora a planilha de produtos e envia novos registros para limpeza na API.
+- **Vendedores.json**: Processo similar para a tabela de vendedores.
+- **itens_pedidos_final.json**: Pipeline completo que lê, limpa via API e atualiza os dados de itens de pedidos.
+- **pedidos(1).json**: Fluxo para gerenciamento e atualização da tabela de pedidos.
+
 <br/>
 
 ## Como Instalar
