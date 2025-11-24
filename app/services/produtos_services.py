@@ -1,34 +1,77 @@
 import pandas as pd
 
+def limpar_pedidos(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Limpa e transforma a tabela de pedidos seguindo as regras de negócio.
+    """
+    df = df.copy()
 
-def limpar_produtos(df: pd.DataFrame) -> pd.DataFrame:
-    
-    # Substituir valores nulos por 'indefinido'
-    df["product_category_name"] = df["product_category_name"].fillna("indefinido")
-    
-    # Converter para string, minúsculo e substituir espaços por _
-    df["product_category_name"] = (
-        df["product_category_name"]
-        .astype(str)
-        .str.lower()
-        .str.replace(" ", "_")
-    )
-    
-    colunas_numericas = [
-        "product_name_lenght",
-        "product_description_lenght",
-        "product_photos_qty",
-        "product_weight_g",
-        "product_length_cm",
-        "product_height_cm",
-        "product_width_cm",
+    #  Remove colunas que nunca devem ser tratadas como parte do dataset
+    colunas_indesejadas = [
+        "message", "dados", "total_registros",
+        "tempo_entrega_dias", "tempo_entrega_estimado_dias", 
+        "entrega_no_prazo"
     ]
+    df = df.drop(columns=[c for c in colunas_indesejadas if c in df.columns], errors="ignore")
+    
+    # Padroniza strings vazias para NaN antes da conversão
+    df = df.replace("", pd.NA)
 
-    for coluna in colunas_numericas:
+    # Conversão de datas
+    colunas_data = [
+        'order_purchase_timestamp',
+        'order_approved_at',
+        'order_delivered_carrier_date',
+        'order_delivered_customer_date',
+        'order_estimated_delivery_date'
+    ]
+    
+    for coluna in colunas_data:
+        if coluna in df.columns:
+            df[coluna] = pd.to_datetime(df[coluna], errors='coerce')
 
-        df[coluna] = pd.to_numeric(df[coluna], errors="coerce")
-        mediana = df[coluna].median()
-        df[coluna] = df[coluna].fillna(mediana)
+    # Tradução de status
+    mapa_status = {
+        'delivered': 'entregue',
+        'invoiced': 'faturado',
+        'shipped': 'enviado',
+        'processing': 'em processamento',
+        'unavailable': 'indisponível',
+        'canceled': 'cancelado',
+        'created': 'criado',
+        'approved': 'aprovado'
+    }
 
+    if 'order_status' in df.columns:
+        df['order_status'] = (
+            df['order_status']
+            .str.lower()
+            .map(mapa_status)
+            .fillna(df['order_status'])
+        )
+
+    # Tempo de entrega real
+    if 'order_delivered_customer_date' in df.columns and 'order_purchase_timestamp' in df.columns:
+        df['tempo_entrega_dias'] = (
+            df['order_delivered_customer_date'] - df['order_purchase_timestamp']
+        ).dt.days
+
+    # Tempo de entrega estimado
+    if 'order_estimated_delivery_date' in df.columns and 'order_purchase_timestamp' in df.columns:
+        df['tempo_entrega_estimado_dias'] = (
+            df['order_estimated_delivery_date'] - df['order_purchase_timestamp']
+        ).dt.days
+
+    # Entrega no prazo
+    if all(col in df.columns for col in ['order_delivered_customer_date', 'order_estimated_delivery_date']):
+        def calcular_entrega_no_prazo(row):
+            if pd.isna(row['order_delivered_customer_date']):
+                return "Não Entregue"
+            elif row['order_delivered_customer_date'] <= row['order_estimated_delivery_date']:
+                return "Sim"
+            else:
+                return "Não"
+
+        df['entrega_no_prazo'] = df.apply(calcular_entrega_no_prazo, axis=1)
 
     return df
