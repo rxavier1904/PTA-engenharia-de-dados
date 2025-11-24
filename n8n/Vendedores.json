@@ -1,0 +1,329 @@
+{
+  "name": "Vendedores",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://pta-engenharia-de-dados-amem.onrender.com/vendedores/vendedores/processar_vendedores",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify([ $json ]) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        784,
+        -16
+      ],
+      "id": "a4f1e4dc-75a3-4c51-8de0-68d3dce8737e",
+      "name": "HTTP Request",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0",
+          "mode": "list",
+          "cachedResultName": "[Rafael] DataLake",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1748074059,
+          "mode": "list",
+          "cachedResultName": "vendedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit#gid=1748074059"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        288,
+        -16
+      ],
+      "id": "79ad8d72-dd58-4271-b813-e1f062164204",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "xa9RTgivcyGQecIK",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3a8aa93e-abfd-499d-ae5e-bb085720797c",
+              "leftValue": "={{ $json.detail }}\n",
+              "rightValue": "\"success\"",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1024,
+        -16
+      ],
+      "id": "f755ac71-bf81-4e17-9bb2-dcf1653c9e76",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "gmtbn@gmail.com",
+        "subject": "ERRO no processamento de vendedores - PTA Engenharia de Dados",
+        "emailType": "text",
+        "message": "Olá!  Ocorreu um erro ao processar os vendedores na API.  Detalhes do erro: {{ JSON.stringify($json.detail, null, 2) }}  Registro enviado: {{ JSON.stringify($json, null, 2) }}  Horário do erro: {{ $now }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1296,
+        160
+      ],
+      "id": "886cb164-b4d0-4347-8a89-a1c2e862aa6e",
+      "name": "Send a message",
+      "webhookId": "6a82813a-ff7e-4d64-b55e-f727a433e553",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "oBvAy4FY1mxRhKnX",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        496,
+        -16
+      ],
+      "id": "5420317a-693d-4cd6-8843-48e6af14364d",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0",
+          "mode": "list",
+          "cachedResultName": "[Rafael] DataLake",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1748074059,
+          "mode": "list",
+          "cachedResultName": "vendedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit#gid=1748074059"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "seller_id"
+          ],
+          "schema": [
+            {
+              "id": "seller_id",
+              "displayName": "seller_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "seller_zip_code_prefix",
+              "displayName": "seller_zip_code_prefix",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "seller_city",
+              "displayName": "seller_city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "seller_state",
+              "displayName": "seller_state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1360,
+        -192
+      ],
+      "id": "c00d749d-8ae8-4a32-bf48-85e4677b7864",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MncoUGXrDEFYxx0V",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "gmtbn@cin.ufpe.br",
+        "subject": "SUCESSO] Pipeline O-Market concluído",
+        "emailType": "text",
+        "message": "SUCESSO] Pipeline O-Market concluído(vendedores)",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1568,
+        -48
+      ],
+      "id": "925147b8-811c-4ede-ab48-2c0ef702f3f5",
+      "name": "Send a message1",
+      "webhookId": "6a82813a-ff7e-4d64-b55e-f727a433e553",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "oBvAy4FY1mxRhKnX",
+          "name": "Gmail account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "b21911bf-44ec-4ac5-9875-a32e6535fb12",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "263ea9de64063ef0ad2811864bca97e2248d10d1de901269e04d3f03c7b52307"
+  },
+  "id": "KTHvApvc3oFjuJPs",
+  "tags": []
+}

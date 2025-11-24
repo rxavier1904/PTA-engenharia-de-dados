@@ -1,0 +1,390 @@
+{
+  "name": "pedidos",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0",
+          "mode": "list",
+          "cachedResultName": "[Rafael] DataLake",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1963108074,
+          "mode": "list",
+          "cachedResultName": "pedidos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit#gid=1963108074"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "order_id"
+          ],
+          "schema": [
+            {
+              "id": "order_id",
+              "displayName": "order_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "order_status",
+              "displayName": "order_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "order_purchase_timestamp",
+              "displayName": "order_purchase_timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "order_approved_at",
+              "displayName": "order_approved_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "order_delivered_carrier_date",
+              "displayName": "order_delivered_carrier_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "order_delivered_customer_date",
+              "displayName": "order_delivered_customer_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "order_estimated_delivery_date",
+              "displayName": "order_estimated_delivery_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tempo_entrega_dias",
+              "displayName": "tempo_entrega_dias",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tempo_entrega_estimado_dias",
+              "displayName": "tempo_entrega_estimado_dias",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "entrega_no_prazo",
+              "displayName": "entrega_no_prazo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -96,
+        16
+      ],
+      "id": "319029c9-f20d-42f7-b2c3-2bb58e6e7101",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hMhVSxiAlwfceXNh",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "gsn@cin.ufpe.br",
+        "subject": "SUCESSO Pipeline O-Market concluído",
+        "emailType": "text",
+        "message": "SUCESSO Pipeline O-Market concluído",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        112,
+        16
+      ],
+      "id": "ab49e76f-0db7-437e-a59f-c57ba1e25d7b",
+      "name": "Send a message1",
+      "webhookId": "6a82813a-ff7e-4d64-b55e-f727a433e553",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "JerO54oMowPd6TM1",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://pta-engenharia-de-dados-pfv.onrender.com/pedidos/limpar",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify([ $json ]) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -544,
+        192
+      ],
+      "id": "215bb855-da07-41fe-b5a2-b3270c6e36db",
+      "name": "HTTP Request1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0",
+          "mode": "list",
+          "cachedResultName": "[Rafael] DataLake",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1963108074,
+          "mode": "list",
+          "cachedResultName": "pedidos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit#gid=1963108074"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -976,
+        192
+      ],
+      "id": "f9ba45d5-9582-46c1-8250-0c49e9f43038",
+      "name": "Google Sheets Trigger1",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "FsZ22fdiBOoDcrui",
+          "name": "Google Sheets Trigger account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3a8aa93e-abfd-499d-ae5e-bb085720797c",
+              "leftValue": "={{ $json.detail }}\n",
+              "rightValue": "\"success\"",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -320,
+        192
+      ],
+      "id": "81a5c87b-fc91-461a-bffe-73f685781c62",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "sendTo": "gsn2@cin.ufpe.br",
+        "subject": "ERRO no processamento de pedidos - PTA Engenharia de Dados",
+        "emailType": "text",
+        "message": "Olá! Ocorreu um erro ao processar os pedidos na API.  Detalhes do erro: {{ JSON.stringify($json.detail, null, 2) }}  Registro enviado: {{ JSON.stringify($json, null, 2) }}  Horário do erro: {{ $now }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -96,
+        208
+      ],
+      "id": "67b13997-720f-4a0e-aecf-4a311b2f24a4",
+      "name": "Send a message2",
+      "webhookId": "6a82813a-ff7e-4d64-b55e-f727a433e553",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "JerO54oMowPd6TM1",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -768,
+        192
+      ],
+      "id": "dd27bd87-7f46-46c2-852b-4f60b537e992",
+      "name": "Limit1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b010f2b7-2e4e-4e3d-b41e-ff67e33df6a1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e7b5de4c49cf8d961f494e47bfcdb1d86054985df092df3382b890485f965c06"
+  },
+  "id": "oHM52m0MghbhhdGS",
+  "tags": []
+}

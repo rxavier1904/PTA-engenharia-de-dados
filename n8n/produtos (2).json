@@ -1,0 +1,388 @@
+{
+  "name": "produtos",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://pta-engenharia-de-dados-pfv-parte-2.onrender.com/produtos/products/processar_produtos",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify([ $json ]) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        0,
+        32
+      ],
+      "id": "3c72e3ea-2103-40dd-9342-e5d44b78391a",
+      "name": "HTTP Request",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0",
+          "mode": "list",
+          "cachedResultName": "[Rafael] DataLake",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 263580706,
+          "mode": "list",
+          "cachedResultName": "produtos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit#gid=263580706"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -496,
+        32
+      ],
+      "id": "656c7bf6-c507-469c-99be-44db23c80827",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "0DPU3vmkwZDUNAQg",
+          "name": "Google Sheets Trigger account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3a8aa93e-abfd-499d-ae5e-bb085720797c",
+              "leftValue": "={{ $json.detail }}\n",
+              "rightValue": "\"success\"",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        240,
+        32
+      ],
+      "id": "934c2de2-4377-4536-ad62-d82ee492373f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "davipffalcao@gmail.com",
+        "subject": "ERRO no processamento de vendedores - PTA Engenharia de Dados",
+        "emailType": "text",
+        "message": "Olá!  Ocorreu um erro ao processar os vendedores na API.  Detalhes do erro: {{ JSON.stringify($json.detail, null, 2) }}  Registro enviado: {{ JSON.stringify($json, null, 2) }}  Horário do erro: {{ $now }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        512,
+        208
+      ],
+      "id": "91a688de-bb92-408d-8f6e-d14d0251567e",
+      "name": "Send a message",
+      "webhookId": "6a82813a-ff7e-4d64-b55e-f727a433e553",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "n0pd7tpd9xKOBHcp",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        32
+      ],
+      "id": "febc7af5-f35c-4e54-aaae-795d88ca820e",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0",
+          "mode": "list",
+          "cachedResultName": "[Rafael] DataLake",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 263580706,
+          "mode": "list",
+          "cachedResultName": "produtos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit#gid=263580706"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "product_id"
+          ],
+          "schema": [
+            {
+              "id": "product_id",
+              "displayName": "product_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "product_category_name",
+              "displayName": "product_category_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "product_name_lenght",
+              "displayName": "product_name_lenght",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "product_description_lenght",
+              "displayName": "product_description_lenght",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "product_photos_qty",
+              "displayName": "product_photos_qty",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "product_weight_g",
+              "displayName": "product_weight_g",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "product_length_cm",
+              "displayName": "product_length_cm",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "product_height_cm",
+              "displayName": "product_height_cm",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "product_width_cm",
+              "displayName": "product_width_cm",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        576,
+        -144
+      ],
+      "id": "c3bb39e6-a2a0-4f37-b59e-18856bbdd3db",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "UsZnUSzXfo99kJb2",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "davipffalcao@gmail.com",
+        "subject": "SUCESSO] Pipeline O-Market concluído",
+        "emailType": "text",
+        "message": "SUCESSO] Pipeline O-Market concluído",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        784,
+        0
+      ],
+      "id": "d3a2592d-d741-4c36-8817-49cff60c0e72",
+      "name": "Send a message1",
+      "webhookId": "6a82813a-ff7e-4d64-b55e-f727a433e553",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "n0pd7tpd9xKOBHcp",
+          "name": "Gmail account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Google Sheets Trigger": [
+      {
+        "json": {
+          "product_id": "123e4567-e89b-12d3-a456-426614174000",
+          "product_category_name": "informatica_acessorios",
+          "product_name_lenght": 30,
+          "product_description_lenght": 120,
+          "product_photos_qty": 5,
+          "product_weight_g": "",
+          "product_length_cm": 25,
+          "product_height_cm": 10,
+          "product_width_cm": 15
+        }
+      }
+    ]
+  },
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "75130ccf-ae62-498f-a164-a67b6cdfcb9d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5ab3761fa478ea5aa1b892349530939193b243413a234c628933cc3e17973012"
+  },
+  "id": "K0HoQyHjzFz6tByY",
+  "tags": []
+}
