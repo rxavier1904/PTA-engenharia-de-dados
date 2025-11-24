@@ -82,6 +82,24 @@ A pasta `n8n/` contém os workflows exportados utilizados para orquestrar o pipe
 - **itens_pedidos_final.json**: Pipeline completo que lê, limpa via API e atualiza os dados de itens de pedidos.
 - **pedidos(1).json**: Fluxo para gerenciamento e atualização da tabela de pedidos.
 
+**Nota:** Ao importar esses fluxos, lembre-se de atualizar as URLs nos nós "HTTP Request" para o endereço da sua API em produção.
+
+### Arquitetura Técnica
+A solução utiliza uma arquitetura orientada a eventos para processamento de dados, integrando **n8n**, **FastAPI** e **Google Sheets**:
+
+1. **Google Sheets (Fonte de Dados):** Atua como o repositório inicial onde os dados brutos são inseridos.
+2. **n8n (Orquestrador):**
+   - **Trigger:** Monitora as planilhas em busca de novas linhas (eventos `rowAdded`).
+   - **Comunicação:** Envia os dados capturados para a API via requisições HTTP (POST).
+   - **Persistência:** Recebe os dados limpos da API e atualiza a planilha ou insere em um banco de dados final.
+3. **API FastAPI (Processamento):**
+   - Recebe o payload JSON do n8n.
+   - **Validação:** Utiliza Pydantic para garantir tipos corretos e tratar valores nulos (ex: converter `""` para `None`).
+   - **Transformação:** Aplica regras de negócio e limpeza de dados utilizando Pandas.
+   - **Resposta:** Retorna o objeto JSON estruturado e pronto para uso.
+
+Esta abordagem desacopla a lógica de transformação (API) da automação de fluxo (n8n), facilitando a manutenção e permitindo que a API seja consumida por outros serviços se necessário.
+
 <br/>
 
 ## Como Instalar
@@ -156,6 +174,39 @@ A pasta `n8n/` contém os workflows exportados utilizados para orquestrar o pipe
    ```
    http://localhost:8000/docs
    ```
+
+<br/>
+
+## Configurando o n8n
+
+Para utilizar os fluxos de automação presentes na pasta `n8n/`, você precisará de uma instância do n8n em execução.
+
+### 1. Rodando o n8n
+Você pode rodar o n8n facilmente se tiver o Node.js instalado (via npx) ou usando Docker.
+
+**Via npx:**
+```bash
+npx n8n
+```
+
+**Via Docker:**
+```bash
+docker run -it --rm --name n8n -p 5678:5678 -v ~/.n8n:/home/node/.n8n n8nio/n8n
+```
+
+Após iniciar, acesse o painel em: `http://localhost:5678`
+
+### 2. Importando os Fluxos
+1. No menu lateral do n8n, clique em **Workflows**.
+2. Selecione **Import from File**.
+3. Navegue até a pasta `n8n/` deste repositório e selecione os arquivos JSON (`produtos (2).json`, `Vendedores.json`, etc.).
+
+### 3. Ajustes Finais
+- **Credenciais:** Você precisará configurar as credenciais do Google Sheets (OAuth2 ou Service Account) dentro do n8n para que os nós "Google Sheets Trigger" funcionem.
+- **Conexão com a API:**
+  - Abra os nós **HTTP Request** nos fluxos importados.
+  - Atualize a URL para apontar para sua API.
+  - **Dica:** Se o n8n estiver rodando em Docker e a API na sua máquina local, use `http://host.docker.internal:8000` em vez de `localhost`.
 
 <br/>
 
