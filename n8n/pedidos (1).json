@@ -134,15 +134,15 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -96,
-        16
+        -704,
+        128
       ],
-      "id": "319029c9-f20d-42f7-b2c3-2bb58e6e7101",
+      "id": "f9a35045-cc90-400f-ab1b-1baff0034269",
       "name": "Append or update row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "hMhVSxiAlwfceXNh",
-          "name": "Google Sheets account"
+          "id": "MncoUGXrDEFYxx0V",
+          "name": "Google Sheets account 2"
         }
       }
     },
@@ -157,23 +157,23 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        112,
-        16
+        -496,
+        128
       ],
-      "id": "ab49e76f-0db7-437e-a59f-c57ba1e25d7b",
+      "id": "0a6a766a-cdf6-4ec4-aff3-c693c45b6022",
       "name": "Send a message1",
       "webhookId": "6a82813a-ff7e-4d64-b55e-f727a433e553",
       "credentials": {
         "gmailOAuth2": {
-          "id": "JerO54oMowPd6TM1",
-          "name": "Gmail account"
+          "id": "oBvAy4FY1mxRhKnX",
+          "name": "Gmail account 2"
         }
       }
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://pta-engenharia-de-dados-pfv.onrender.com/pedidos/limpar",
+        "url": "https://pta-engenharia-de-dados-aleluia-rafael.onrender.com/pedidos/limpar",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -191,10 +191,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -544,
-        192
+        -1152,
+        304
       ],
-      "id": "215bb855-da07-41fe-b5a2-b3270c6e36db",
+      "id": "13163718-d29d-4ef8-855b-82373e53c23b",
       "name": "HTTP Request1",
       "alwaysOutputData": false
     },
@@ -227,15 +227,15 @@
       "type": "n8n-nodes-base.googleSheetsTrigger",
       "typeVersion": 1,
       "position": [
-        -976,
-        192
+        -1584,
+        304
       ],
-      "id": "f9ba45d5-9582-46c1-8250-0c49e9f43038",
+      "id": "faf8502d-369f-4a9a-a7fe-d79eb5fe9f58",
       "name": "Google Sheets Trigger1",
       "credentials": {
         "googleSheetsTriggerOAuth2Api": {
-          "id": "FsZ22fdiBOoDcrui",
-          "name": "Google Sheets Trigger account 3"
+          "id": "9TXNWdUDvKQmrzWF",
+          "name": "Google Sheets Trigger account 2"
         }
       }
     },
@@ -267,10 +267,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -320,
-        192
+        -928,
+        304
       ],
-      "id": "81a5c87b-fc91-461a-bffe-73f685781c62",
+      "id": "6c5bee2e-8cb7-4f53-9880-7269d5f7e67a",
       "name": "If1"
     },
     {
@@ -284,16 +284,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        -96,
-        208
+        -704,
+        320
       ],
-      "id": "67b13997-720f-4a0e-aecf-4a311b2f24a4",
+      "id": "0b9cc608-8cc7-4700-ac61-45f6f67cb7ca",
       "name": "Send a message2",
       "webhookId": "6a82813a-ff7e-4d64-b55e-f727a433e553",
       "credentials": {
         "gmailOAuth2": {
-          "id": "JerO54oMowPd6TM1",
-          "name": "Gmail account"
+          "id": "oBvAy4FY1mxRhKnX",
+          "name": "Gmail account 2"
         }
       }
     },
@@ -304,10 +304,10 @@
       "type": "n8n-nodes-base.limit",
       "typeVersion": 1,
       "position": [
-        -768,
-        192
+        -1376,
+        304
       ],
-      "id": "dd27bd87-7f46-46c2-852b-4f60b537e992",
+      "id": "334398d2-8ca3-4c7d-8cdc-2690d8aa432c",
       "name": "Limit1"
     }
   ],
@@ -380,11 +380,11 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "b010f2b7-2e4e-4e3d-b41e-ff67e33df6a1",
+  "versionId": "1f3b31eb-a32e-4daa-acb6-d363e0cabb89",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "e7b5de4c49cf8d961f494e47bfcdb1d86054985df092df3382b890485f965c06"
+    "instanceId": "263ea9de64063ef0ad2811864bca97e2248d10d1de901269e04d3f03c7b52307"
   },
-  "id": "oHM52m0MghbhhdGS",
+  "id": "Sb2xSEtRjnk39A81",
   "tags": []
 }

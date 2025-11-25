@@ -1,10 +1,10 @@
 {
-  "name": "produtos",
+  "name": "Vendedores",
   "nodes": [
     {
       "parameters": {
         "method": "POST",
-        "url": "https://pta-engenharia-de-dados-pfv-parte-2.onrender.com/produtos/products/processar_produtos",
+        "url": "https://pta-engenharia-de-dados-aleluia-rafael.onrender.com/vendedores/vendedores/processar_vendedores",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -22,10 +22,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        0,
-        32
+        784,
+        -16
       ],
-      "id": "3c72e3ea-2103-40dd-9342-e5d44b78391a",
+      "id": "a4f1e4dc-75a3-4c51-8de0-68d3dce8737e",
       "name": "HTTP Request",
       "alwaysOutputData": true
     },
@@ -47,10 +47,10 @@
         },
         "sheetName": {
           "__rl": true,
-          "value": 263580706,
+          "value": 1748074059,
           "mode": "list",
-          "cachedResultName": "produtos",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit#gid=263580706"
+          "cachedResultName": "vendedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit#gid=1748074059"
         },
         "event": "rowAdded",
         "options": {}
@@ -58,15 +58,15 @@
       "type": "n8n-nodes-base.googleSheetsTrigger",
       "typeVersion": 1,
       "position": [
-        -496,
-        32
+        288,
+        -16
       ],
-      "id": "656c7bf6-c507-469c-99be-44db23c80827",
+      "id": "79ad8d72-dd58-4271-b813-e1f062164204",
       "name": "Google Sheets Trigger",
       "credentials": {
         "googleSheetsTriggerOAuth2Api": {
-          "id": "0DPU3vmkwZDUNAQg",
-          "name": "Google Sheets Trigger account 3"
+          "id": "xa9RTgivcyGQecIK",
+          "name": "Google Sheets Trigger account"
         }
       }
     },
@@ -98,15 +98,15 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        240,
-        32
+        1024,
+        -16
       ],
-      "id": "934c2de2-4377-4536-ad62-d82ee492373f",
+      "id": "f755ac71-bf81-4e17-9bb2-dcf1653c9e76",
       "name": "If"
     },
     {
       "parameters": {
-        "sendTo": "davipffalcao@gmail.com",
+        "sendTo": "gmtbn@gmail.com",
         "subject": "ERRO no processamento de vendedores - PTA Engenharia de Dados",
         "emailType": "text",
         "message": "Olá!  Ocorreu um erro ao processar os vendedores na API.  Detalhes do erro: {{ JSON.stringify($json.detail, null, 2) }}  Registro enviado: {{ JSON.stringify($json, null, 2) }}  Horário do erro: {{ $now }}",
@@ -115,15 +115,15 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        512,
-        208
+        1296,
+        160
       ],
-      "id": "91a688de-bb92-408d-8f6e-d14d0251567e",
+      "id": "886cb164-b4d0-4347-8a89-a1c2e862aa6e",
       "name": "Send a message",
       "webhookId": "6a82813a-ff7e-4d64-b55e-f727a433e553",
       "credentials": {
         "gmailOAuth2": {
-          "id": "n0pd7tpd9xKOBHcp",
+          "id": "oBvAy4FY1mxRhKnX",
           "name": "Gmail account 2"
         }
       }
@@ -135,10 +135,10 @@
       "type": "n8n-nodes-base.limit",
       "typeVersion": 1,
       "position": [
-        -288,
-        32
+        496,
+        -16
       ],
-      "id": "febc7af5-f35c-4e54-aaae-795d88ca820e",
+      "id": "5420317a-693d-4cd6-8843-48e6af14364d",
       "name": "Limit"
     },
     {
@@ -153,21 +153,21 @@
         },
         "sheetName": {
           "__rl": true,
-          "value": 263580706,
+          "value": 1748074059,
           "mode": "list",
-          "cachedResultName": "produtos",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit#gid=263580706"
+          "cachedResultName": "vendedores",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1O4_glsXpX2DdebFrGBs0M7OxqDVIzDtjPhhDdJ332G0/edit#gid=1748074059"
         },
         "columns": {
           "mappingMode": "autoMapInputData",
           "value": {},
           "matchingColumns": [
-            "product_id"
+            "seller_id"
           ],
           "schema": [
             {
-              "id": "product_id",
-              "displayName": "product_id",
+              "id": "seller_id",
+              "displayName": "seller_id",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -176,8 +176,8 @@
               "removed": false
             },
             {
-              "id": "product_category_name",
-              "displayName": "product_category_name",
+              "id": "seller_zip_code_prefix",
+              "displayName": "seller_zip_code_prefix",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -185,8 +185,8 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "product_name_lenght",
-              "displayName": "product_name_lenght",
+              "id": "seller_city",
+              "displayName": "seller_city",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -194,53 +194,8 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "product_description_lenght",
-              "displayName": "product_description_lenght",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "product_photos_qty",
-              "displayName": "product_photos_qty",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "product_weight_g",
-              "displayName": "product_weight_g",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "product_length_cm",
-              "displayName": "product_length_cm",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "product_height_cm",
-              "displayName": "product_height_cm",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "product_width_cm",
-              "displayName": "product_width_cm",
+              "id": "seller_state",
+              "displayName": "seller_state",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -256,77 +211,61 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        576,
-        -144
+        1360,
+        -192
       ],
-      "id": "c3bb39e6-a2a0-4f37-b59e-18856bbdd3db",
+      "id": "c00d749d-8ae8-4a32-bf48-85e4677b7864",
       "name": "Append or update row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "UsZnUSzXfo99kJb2",
-          "name": "Google Sheets account 3"
+          "id": "MncoUGXrDEFYxx0V",
+          "name": "Google Sheets account 2"
         }
       }
     },
     {
       "parameters": {
-        "sendTo": "davipffalcao@gmail.com",
+        "sendTo": "gmtbn@cin.ufpe.br",
         "subject": "SUCESSO] Pipeline O-Market concluído",
         "emailType": "text",
-        "message": "SUCESSO] Pipeline O-Market concluído",
+        "message": "SUCESSO] Pipeline O-Market concluído(vendedores)",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        784,
-        0
+        1568,
+        -48
       ],
-      "id": "d3a2592d-d741-4c36-8817-49cff60c0e72",
+      "id": "925147b8-811c-4ede-ab48-2c0ef702f3f5",
       "name": "Send a message1",
       "webhookId": "6a82813a-ff7e-4d64-b55e-f727a433e553",
       "credentials": {
         "gmailOAuth2": {
-          "id": "n0pd7tpd9xKOBHcp",
+          "id": "oBvAy4FY1mxRhKnX",
           "name": "Gmail account 2"
         }
       }
     }
   ],
-  "pinData": {
-    "Google Sheets Trigger": [
-      {
-        "json": {
-          "product_id": "123e4567-e89b-12d3-a456-426614174000",
-          "product_category_name": "informatica_acessorios",
-          "product_name_lenght": 30,
-          "product_description_lenght": 120,
-          "product_photos_qty": 5,
-          "product_weight_g": "",
-          "product_length_cm": 25,
-          "product_height_cm": 10,
-          "product_width_cm": 15
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "connections": {
-    "HTTP Request": {
+    "Google Sheets Trigger": {
       "main": [
         [
           {
-            "node": "If",
+            "node": "Limit",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Google Sheets Trigger": {
+    "HTTP Request": {
       "main": [
         [
           {
-            "node": "Limit",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -376,13 +315,15 @@
   },
   "active": true,
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
   },
-  "versionId": "75130ccf-ae62-498f-a164-a67b6cdfcb9d",
+  "versionId": "fb19120c-caa6-4926-ad62-8967796b8e9d",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "5ab3761fa478ea5aa1b892349530939193b243413a234c628933cc3e17973012"
+    "instanceId": "263ea9de64063ef0ad2811864bca97e2248d10d1de901269e04d3f03c7b52307"
   },
-  "id": "K0HoQyHjzFz6tByY",
+  "id": "KTHvApvc3oFjuJPs",
   "tags": []
 }
